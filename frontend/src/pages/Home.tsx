@@ -287,10 +287,13 @@ const TaskForm = ({ onFinish, onBlur, taskId }: TaskFormProps) => {
     </div>
   );
 };
+
 type UserAssignPopoverProps = {
   assigned: string | null;
   onAssigned: (assigned: string) => void;
 };
+
+
 const UserAssignPopover = ({
   assigned,
   onAssigned,
@@ -456,6 +459,9 @@ type TaskGroupProps = {
   setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
   setTaskGroups: React.Dispatch<React.SetStateAction<TaskGroup[]>>;
 };
+
+
+
 const TaskGroup = ({
   group,
   tasksCounter,
@@ -464,10 +470,10 @@ const TaskGroup = ({
   setTasks,
   setTaskGroups,
 }: TaskGroupProps) => {
-  const [{ isOver }, drop] = useDrop(
+  const [, drop] = useDrop(
     () => ({
       accept: "task",
-      drop: (item) =>
+      drop: (item: {id: number}) =>
         setTasks((tasks) => {
           const t = tasks.find((val) => val.taskId === item.id);
           if (t) t.taskGroupId = group.groupId;
