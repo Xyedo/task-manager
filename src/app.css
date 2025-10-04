@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+* {
+  overflow-wrap: break-word;
+}
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply min-h-screen
+}
+
+
