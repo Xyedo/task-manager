@@ -9,7 +9,6 @@ export default function Login() {
   const navigate = useNavigate();
 
   const onFinish = (values: { username: string; password: string }) => {
-    // mock auth
     console.log("login", values);
     sessionStorage.setItem("auth", "1");
     navigate("/");

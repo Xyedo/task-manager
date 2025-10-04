@@ -37,6 +37,7 @@ import {
 } from "@ant-design/icons";
 import InfiniteScroll from "react-infinite-scroll-component";
 import type { ItemType } from "antd/es/menu/interface";
+import { useDrag, useDrop } from "react-dnd";
 
 const defaultProjectName = "My Kanban Project";
 type taskState = "Naming" | "Creating" | "Idle";
@@ -69,18 +70,14 @@ export default function Home() {
     navigate("/login");
   };
 
-  const dateFormater = new Intl.DateTimeFormat("en-US", {
-    dateStyle: "medium",
-  });
-
-  const [useTaskGroup, setTaskGroup] = useState<TaskGroup[]>([
+  const [useTaskGroups, setTaskGroups] = useState<TaskGroup[]>([
     { groupId: 1, name: "TO DO", state: "Idle" },
     { groupId: 2, name: "In Progress", state: "Idle" },
     { groupId: 3, name: "In Review", state: "Idle" },
     { groupId: 4, name: "Done", state: "Idle" },
   ]);
 
-  const [useTask, setTask] = useState<Task[]>([
+  const [useTasks, setTasks] = useState<Task[]>([
     {
       taskGroupId: 1,
       taskId: 1,
@@ -99,7 +96,7 @@ export default function Home() {
     },
   ]);
 
-  const [taskCounter, setTaskCounter] = useState([
+  const [tasksCounter, setTasksCounter] = useState([
     { groupId: 1, total: 1 },
     { groupId: 2, total: 1 },
     { groupId: 3, total: 0 },
@@ -120,311 +117,18 @@ export default function Home() {
             <Divider />
 
             <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-              {useTaskGroup.map((group) => (
+              {useTaskGroups.map((group) => (
                 <Col key={group.groupId} xs={24} sm={12} md={8} lg={6}>
-                  <Card
-                    title={
-                      <Flex
-                        gap="middle"
-                        align="center"
-                        justify="flex-start"
-                        className="rounded-md hover:cursor-pointer hover:bg-gray-200"
-                        onClick={() => {
-                          setTaskGroup((values) => {
-                            const found = values.find(
-                              (item) => item.groupId === group.groupId
-                            );
-                            if (found) found.state = "Naming";
-
-                            return [...values];
-                          });
-                        }}
-                        onBlur={() =>
-                          setTaskGroup((values) => {
-                            const found = values.find(
-                              (item) => item.groupId === group.groupId
-                            );
-                            if (found) found.state = "Naming";
-                            return [...values];
-                          })
-                        }
-                      >
-                        {group.state === "Naming" ? (
-                          <TitleEdit
-                            value={group.name}
-                            onValueChange={(e) => {
-                              setTaskGroup((values) => {
-                                const found = values.find(
-                                  (item) => item.groupId === group.groupId
-                                );
-                                if (found) found.name = e.target.value;
-                                return [...values];
-                              });
-                            }}
-                            onPressEnter={() =>
-                              setTaskGroup((values) => {
-                                const found = values.find(
-                                  (item) => item.groupId === group.groupId
-                                );
-                                if (found) found.state = "Idle";
-                                return [...values];
-                              })
-                            }
-                          />
-                        ) : (
-                          <>
-                            <Typography.Text strong>
-                              {group.name}
-                            </Typography.Text>
-                            <Typography.Text
-                              type="secondary"
-                              className="bg-gray-100 w-4 text-center rounded-sm"
-                            >
-                              {
-                                taskCounter.find(
-                                  (item) => item.groupId === group.groupId
-                                )?.total
-                              }
-                            </Typography.Text>
-                          </>
-                        )}
-                      </Flex>
-                    }
-                    size="small"
-                    // extra={<}
-                    style={{ marginBottom: 16 }}
-                  >
-                    <Space
-                      direction="vertical"
-                      size="middle"
-                      className="w-full"
-                    >
-                      {useTask
-                        .filter((task) => task.taskGroupId === group.groupId)
-                        .map((task) => {
-                          return (
-                            <Card
-                              type="inner"
-                              key={task.taskId}
-                              className="group hover:cursor-pointer hover:shadow-md hover:bg-gray-50"
-                              onBlur={() =>
-                                setTask((tasks) => {
-                                  const t = tasks.find(
-                                    (val) => val.taskId === task.taskId
-                                  );
-                                  if (t) t.editing = false;
-
-                                  return [...tasks];
-                                })
-                              }
-                              title={
-                                <>
-                                  {task.editing ? (
-                                    <TitleEdit
-                                      value={task.title}
-                                      onValueChange={(e) =>
-                                        setTask((tasks) => {
-                                          const t = tasks.find(
-                                            (val) => val.taskId === task.taskId
-                                          );
-                                          if (t) t.title = e.target.value;
-
-                                          return [...tasks];
-                                        })
-                                      }
-                                      onPressEnter={() =>
-                                        setTask((tasks) => {
-                                          const t = tasks.find(
-                                            (val) => val.taskId === task.taskId
-                                          );
-                                          if (t) t.editing = false;
-
-                                          return [...tasks];
-                                        })
-                                      }
-                                    />
-                                  ) : (
-                                    <Flex
-                                      justify="flex-start"
-                                      align="center"
-                                      gap="small"
-                                      className=""
-                                    >
-                                      <Typography.Text>
-                                        {task.title}
-                                      </Typography.Text>
-                                      <div
-                                        className="rounded-md p-1 hover:bg-gray-200"
-                                        onClick={() => {
-                                          setTask((values) => {
-                                            const found = values.find(
-                                              (item) =>
-                                                item.taskId === task.taskId
-                                            );
-                                            if (found) found.editing = true;
-                                            return [...values];
-                                          });
-                                        }}
-                                        onBlur={() =>
-                                          setTask((values) => {
-                                            const found = values.find(
-                                              (item) =>
-                                                item.taskId === task.taskId
-                                            );
-                                            if (found) found.editing = false;
-                                            return [...values];
-                                          })
-                                        }
-                                      >
-                                        <EditOutlined className="opacity-0 group-hover:opacity-100 transition" />
-                                      </div>
-                                    </Flex>
-                                  )}
-                                </>
-                              }
-                            >
-                              {task.date ? (
-                                <Tooltip
-                                  title={`Due date on ${dateFormater.format(
-                                    new Date(task.date)
-                                  )}`}
-                                >
-                                  <Flex
-                                    justify="flex-start"
-                                    align="center"
-                                    gap={8}
-                                    className="border-2 border-gray-200 rounded-md text-gray-400 w-fit"
-                                  >
-                                    <CalendarOutlined className="ml-2" />
-                                    <Typography.Text className="text-gray-400 text-sm mr-2">
-                                      {dateFormater.format(new Date(task.date))}
-                                    </Typography.Text>
-                                  </Flex>
-                                </Tooltip>
-                              ) : null}
-
-                              <Divider size="small" />
-                              <Flex justify="flex-end" align="center">
-                                <Popover
-                                  placement="topRight"
-                                  trigger="click"
-                                  content={
-                                    <UserAssignPopover
-                                      assigned={task.assigned_to}
-                                      onAssigned={(val) => {
-                                        setTask((tasks) => {
-                                          const found = tasks.find(
-                                            (v) => v.taskId === task.taskId
-                                          );
-                                          if (found) found.assigned_to = val;
-                                          return [...tasks];
-                                        });
-                                      }}
-                                    />
-                                  }
-                                >
-                                  <Tooltip
-                                    title={
-                                      task.assigned_to
-                                        ? `Assigned to ${task.assigned_to}`
-                                        : "Unassigned"
-                                    }
-                                    placement="bottom"
-                                  >
-                                    <div
-                                      className={`rounded-md bg-gray-100 hover:bg-gray-200 w-8 h-8 flex justify-center items-center text-gray-400 hover:cursor-pointer ${
-                                        task.assigned_to
-                                          ? "border-2 border-blue-300"
-                                          : null
-                                      }`}
-                                    >
-                                      <UserOutlined />
-                                    </div>
-                                  </Tooltip>
-                                </Popover>
-                              </Flex>
-                            </Card>
-                          );
-                        })}
-                      {group.state === "Creating" ? (
-                        <TaskForm
-                          onFinish={(val) => {
-                            console.log({ val });
-                            setTask((values) => {
-                              const newtask = {
-                                taskGroupId: group.groupId,
-                                taskId: values.length + 1,
-                                title: val.title,
-                                date: val.date,
-                                assigned_to: val.assignedTo,
-                                editing: false,
-                              };
-
-                              return [...values, newtask];
-                            });
-
-                            setTaskGroup((values) => {
-                              const found = values.find(
-                                (item) => item.groupId === group.groupId
-                              );
-                              if (found) found.state = "Idle";
-
-                              return [...values];
-                            });
-
-                            setTaskCounter((values) => {
-                              const found = values.find(
-                                (item) => item.groupId === group.groupId
-                              );
-                              if (found) found.total += 1;
-                              return [...values];
-                            });
-                          }}
-                          onBlur={() => {
-                            setTaskGroup((values) => {
-                              const found = values.find(
-                                (item) => item.groupId === group.groupId
-                              );
-                              if (found) found.state = "Idle";
-
-                              return [...values];
-                            });
-                          }}
-                        />
-                      ) : (
-                        <div className="w-full h-10 hover:cursor-pointer">
-                          <Form
-                            className="mt-2 opacity-0 hover:opacity-100"
-                            style={{
-                              opacity: group.groupId === 1 ? 1 : undefined,
-                            }}
-                            onSubmitCapture={(e) => {
-                              e.preventDefault();
-
-                              setTaskGroup((values) => {
-                                const found = values.find(
-                                  (item) => item.groupId === group.groupId
-                                );
-                                if (found) found.state = "Creating";
-                                return [...values];
-                              });
-                            }}
-                          >
-                            <Form.Item>
-                              <Button
-                                type="default"
-                                htmlType="submit"
-                                block
-                                icon={<PlusOutlined />}
-                              >
-                                Create
-                              </Button>
-                            </Form.Item>
-                          </Form>
-                        </div>
-                      )}
-                    </Space>
-                  </Card>
+                  <TaskGroup
+                    group={group}
+                    tasksCounter={tasksCounter}
+                    setTasksCounter={setTasksCounter}
+                    useTasks={useTasks.filter(
+                      (task) => task.taskGroupId === group.groupId
+                    )}
+                    setTasks={setTasks}
+                    setTaskGroups={setTaskGroups}
+                  />
                 </Col>
               ))}
             </Row>
@@ -491,7 +195,7 @@ type TaskFormProps = {
 };
 const TaskForm = ({ onFinish, onBlur, taskId }: TaskFormProps) => {
   const [assigned, setAssigned] = useState<string | null>(null);
-  const formRef = useRef(null);
+  const formRef = useRef<HTMLDivElement>(null);
   const [form] = Form.useForm<TaskFormValues>();
 
   useEffect(() => {
@@ -739,5 +443,345 @@ const ProjectCreateModal = ({
         </Form.Item>
       </Form>
     </Modal>
+  );
+};
+
+type TaskGroupProps = {
+  group: TaskGroup;
+  tasksCounter: { groupId: number; total: number }[];
+  setTasksCounter: React.Dispatch<
+    React.SetStateAction<{ groupId: number; total: number }[]>
+  >;
+  useTasks: Task[];
+  setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
+  setTaskGroups: React.Dispatch<React.SetStateAction<TaskGroup[]>>;
+};
+const TaskGroup = ({
+  group,
+  tasksCounter,
+  setTasksCounter,
+  useTasks,
+  setTasks,
+  setTaskGroups,
+}: TaskGroupProps) => {
+  const [{ isOver }, drop] = useDrop(
+    () => ({
+      accept: "task",
+      drop: (item) =>
+        setTasks((tasks) => {
+          const t = tasks.find((val) => val.taskId === item.id);
+          if (t) t.taskGroupId = group.groupId;
+          return [...tasks];
+        }),
+    }),
+    []
+  );
+  return (
+    <Card
+      ref={drop}
+      title={
+        <Flex
+          gap="middle"
+          align="center"
+          justify="flex-start"
+          className="rounded-md hover:cursor-pointer hover:bg-gray-200"
+          onClick={() => {
+            setTaskGroups((values) => {
+              const found = values.find(
+                (item) => item.groupId === group.groupId
+              );
+              if (found) found.state = "Naming";
+
+              return [...values];
+            });
+          }}
+          onBlur={() =>
+            setTaskGroups((values) => {
+              const found = values.find(
+                (item) => item.groupId === group.groupId
+              );
+              if (found) found.state = "Naming";
+              return [...values];
+            })
+          }
+        >
+          {group.state === "Naming" ? (
+            <TitleEdit
+              value={group.name}
+              onValueChange={(e) => {
+                setTaskGroups((values) => {
+                  const found = values.find(
+                    (item) => item.groupId === group.groupId
+                  );
+                  if (found) found.name = e.target.value;
+                  return [...values];
+                });
+              }}
+              onPressEnter={() =>
+                setTaskGroups((values) => {
+                  const found = values.find(
+                    (item) => item.groupId === group.groupId
+                  );
+                  if (found) found.state = "Idle";
+                  return [...values];
+                })
+              }
+            />
+          ) : (
+            <>
+              <Typography.Text strong>{group.name}</Typography.Text>
+              <Typography.Text
+                type="secondary"
+                className="bg-gray-100 w-4 text-center rounded-sm"
+              >
+                {
+                  tasksCounter.find((item) => item.groupId === group.groupId)
+                    ?.total
+                }
+              </Typography.Text>
+            </>
+          )}
+        </Flex>
+      }
+      size="small"
+      className={`mb-4`}
+    >
+      <Space direction="vertical" size="middle" className="w-full">
+        {useTasks
+          .filter((task) => task.taskGroupId === group.groupId)
+          .map((task) => {
+            return (
+              <>
+                <TaskCard key={task.taskId} task={task} setTask={setTasks} />
+              </>
+            );
+          })}
+        {group.state === "Creating" ? (
+          <TaskForm
+            onFinish={(val) => {
+              setTasks((values) => {
+                const newtask = {
+                  taskGroupId: group.groupId,
+                  taskId: values.length + 1,
+                  title: val.title,
+                  date: val.date,
+                  assigned_to: val.assignedTo,
+                  editing: false,
+                };
+
+                return [...values, newtask];
+              });
+
+              setTaskGroups((values) => {
+                const found = values.find(
+                  (item) => item.groupId === group.groupId
+                );
+                if (found) found.state = "Idle";
+
+                return [...values];
+              });
+
+              setTasksCounter((values) => {
+                const found = values.find(
+                  (item) => item.groupId === group.groupId
+                );
+                if (found) found.total += 1;
+                return [...values];
+              });
+            }}
+            onBlur={() => {
+              setTaskGroups((values) => {
+                const found = values.find(
+                  (item) => item.groupId === group.groupId
+                );
+                if (found) found.state = "Idle";
+
+                return [...values];
+              });
+            }}
+          />
+        ) : (
+          <div className="w-full h-10 hover:cursor-pointer">
+            <Form
+              className="mt-2 opacity-0 hover:opacity-100"
+              style={{
+                opacity: group.groupId === 1 ? 1 : undefined,
+              }}
+              onSubmitCapture={(e) => {
+                e.preventDefault();
+
+                setTaskGroups((values) => {
+                  const found = values.find(
+                    (item) => item.groupId === group.groupId
+                  );
+                  if (found) found.state = "Creating";
+                  return [...values];
+                });
+              }}
+            >
+              <Form.Item>
+                <Button
+                  type="default"
+                  htmlType="submit"
+                  block
+                  icon={<PlusOutlined />}
+                >
+                  Create
+                </Button>
+              </Form.Item>
+            </Form>
+          </div>
+        )}
+      </Space>
+    </Card>
+  );
+};
+
+type TaskCardProps = {
+  task: Task;
+  setTask: React.Dispatch<React.SetStateAction<Task[]>>;
+};
+
+const TaskCard = ({ task, setTask }: TaskCardProps) => {
+  const dateFormater = new Intl.DateTimeFormat("en-US", {
+    dateStyle: "medium",
+  });
+
+  const [{ isDragging }, dragTask] = useDrag(() => ({
+    type: "task",
+    item: { id: task.taskId },
+  }));
+
+  return (
+    <>
+      {/* <DragPreviewImage connect={preview} src={knightImage} /> */}
+      <Card
+        ref={dragTask}
+        style={{ opacity: isDragging ? 0.5 : 1 }}
+        type="inner"
+        key={task.taskId}
+        className="group hover:cursor-pointer hover:shadow-md hover:bg-gray-50"
+        onBlur={() =>
+          setTask((tasks) => {
+            const t = tasks.find((val) => val.taskId === task.taskId);
+            if (t) t.editing = false;
+
+            return [...tasks];
+          })
+        }
+        title={
+          <>
+            {task.editing ? (
+              <TitleEdit
+                value={task.title}
+                onValueChange={(e) =>
+                  setTask((tasks) => {
+                    const t = tasks.find((val) => val.taskId === task.taskId);
+                    if (t) t.title = e.target.value;
+
+                    return [...tasks];
+                  })
+                }
+                onPressEnter={() =>
+                  setTask((tasks) => {
+                    const t = tasks.find((val) => val.taskId === task.taskId);
+                    if (t) t.editing = false;
+
+                    return [...tasks];
+                  })
+                }
+              />
+            ) : (
+              <Flex
+                justify="flex-start"
+                align="center"
+                gap="small"
+                className=""
+              >
+                <Typography.Text>{task.title}</Typography.Text>
+                <div
+                  className="rounded-md p-1 hover:bg-gray-200"
+                  onClick={() => {
+                    setTask((values) => {
+                      const found = values.find(
+                        (item) => item.taskId === task.taskId
+                      );
+                      if (found) found.editing = true;
+                      return [...values];
+                    });
+                  }}
+                  onBlur={() =>
+                    setTask((values) => {
+                      const found = values.find(
+                        (item) => item.taskId === task.taskId
+                      );
+                      if (found) found.editing = false;
+                      return [...values];
+                    })
+                  }
+                >
+                  <EditOutlined className="opacity-0 group-hover:opacity-100 transition" />
+                </div>
+              </Flex>
+            )}
+          </>
+        }
+      >
+        {task.date ? (
+          <Tooltip
+            title={`Due date on ${dateFormater.format(new Date(task.date))}`}
+          >
+            <Flex
+              justify="flex-start"
+              align="center"
+              gap={8}
+              className="border-2 border-gray-200 rounded-md text-gray-400 w-fit"
+            >
+              <CalendarOutlined className="ml-2" />
+              <Typography.Text className="text-gray-400 text-sm mr-2">
+                {dateFormater.format(new Date(task.date))}
+              </Typography.Text>
+            </Flex>
+          </Tooltip>
+        ) : null}
+
+        <Divider size="small" />
+        <Flex justify="flex-end" align="center">
+          <Popover
+            placement="topRight"
+            trigger="click"
+            content={
+              <UserAssignPopover
+                assigned={task.assigned_to}
+                onAssigned={(val) => {
+                  setTask((tasks) => {
+                    const found = tasks.find((v) => v.taskId === task.taskId);
+                    if (found) found.assigned_to = val;
+                    return [...tasks];
+                  });
+                }}
+              />
+            }
+          >
+            <Tooltip
+              title={
+                task.assigned_to
+                  ? `Assigned to ${task.assigned_to}`
+                  : "Unassigned"
+              }
+              placement="bottom"
+            >
+              <div
+                className={`rounded-md bg-gray-100 hover:bg-gray-200 w-8 h-8 flex justify-center items-center text-gray-400 hover:cursor-pointer ${
+                  task.assigned_to ? "border-2 border-blue-300" : null
+                }`}
+              >
+                <UserOutlined />
+              </div>
+            </Tooltip>
+          </Popover>
+        </Flex>
+      </Card>
+    </>
   );
 };
