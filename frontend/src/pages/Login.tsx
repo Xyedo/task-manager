@@ -1,45 +1,42 @@
+import { useAuthToken } from "@/hooks/useAuthToken";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Typography, Card, Space, Row, Col } from "antd";
-import { useEffect } from "react";
-import { useNavigate } from "react-router";
-
-const { Title } = Typography;
+import * as identity from "@/api/identity";
 
 export default function Login() {
-  const navigate = useNavigate();
-
-  const onFinish = (values: { username: string; password: string }) => {
-    console.log("login", values);
-    sessionStorage.setItem("auth", "1");
-    navigate("/");
+  const [form] = Form.useForm();
+  const [, setAccessToken] = useAuthToken();
+  const onFinish = async (values: { username: string; password: string }) => {
+    try {
+      const res = await identity.login(values.username, values.password);
+      setAccessToken(res.accessToken);
+    } catch (err) {
+      console.error("Login failed:", err);
+      form.setFields([
+        {
+          name: "password",
+          errors: ["Invalid username or password"],
+        },
+      ]);
+    }
   };
-
-  useEffect(() => {
-    const onEnter = (e: KeyboardEvent) => {
-      if (e.key === "Enter") {
-        const form = document.getElementById("login");
-        if (form) {
-          form.dispatchEvent(
-            new Event("submit", { cancelable: true, bubbles: true })
-          );
-        }
-      }
-    };
-
-    window.addEventListener("keydown", onEnter);
-    return () => window.removeEventListener("keydown", onEnter);
-  }, []);
 
   return (
     <Row align="middle" justify="center" className="min-h-dvh">
       <Col xs={22} sm={18} md={12} lg={8} xl={6}>
         <Card variant="borderless">
           <Space direction="vertical" size={12} className="w-full">
-            <Title level={3} className="text-center m-0" >
+            <Typography.Title level={3} className="text-center m-0">
               Sign in to Task Manager
-            </Title>
+            </Typography.Title>
 
-            <Form id="login" name="login" layout="vertical" onFinish={onFinish}>
+            <Form
+              form={form}
+              id="login"
+              name="login"
+              layout="vertical"
+              onFinish={onFinish}
+            >
               <Form.Item
                 name="username"
                 label="Username"
@@ -69,7 +66,7 @@ export default function Login() {
               </Form.Item>
             </Form>
 
-            <div  className="text-center text-gray-500">
+            <div className="text-center text-gray-500">
               Demo credentials: <strong>user / password</strong>
             </div>
           </Space>

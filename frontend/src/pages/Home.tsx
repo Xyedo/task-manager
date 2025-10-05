@@ -1,10 +1,4 @@
-import {
-  useEffect,
-  useRef,
-  useState,
-  type ChangeEventHandler,
-  type KeyboardEventHandler,
-} from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Button,
   Layout,
@@ -21,8 +15,6 @@ import {
   DatePicker,
   Popover,
   List,
-  Menu,
-  Modal,
 } from "antd";
 import { useNavigate, useParams } from "react-router";
 import {
@@ -31,29 +23,27 @@ import {
   CloseOutlined,
   EditOutlined,
   PlusOutlined,
-  RocketOutlined,
   UserAddOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import InfiniteScroll from "react-infinite-scroll-component";
-import type { ItemType } from "antd/es/menu/interface";
 import { useDrag, useDrop } from "react-dnd";
+import { useAuthToken } from "@/hooks/useAuthToken";
+import { Sidebar } from "@/components/Sidebar";
+import * as workspace from "@/api/workspace";
+import * as identity from "@/api/identity";
 
-const defaultProjectName = "My Kanban Project";
+const defaultWorkspaceName = "My Kanban Project";
 type taskState = "Naming" | "Creating" | "Idle";
 
-type TaskGroup = {
-  groupId: number;
-  name: string;
+type TaskGroup = workspace.Group & {
   state: taskState;
+  workspaceId: number;
 };
 
-type Task = {
+type Task = workspace.Task & {
   taskGroupId: number;
-  taskId: number;
-  title: string;
-  date: Date | null;
-  assigned_to: string | null;
+  workspaceId: number;
   editing: boolean;
 };
 
@@ -61,53 +51,78 @@ export type HomeProps = {
   title?: string;
 };
 export default function Home() {
-  const params = useParams();
-  const title = params.projectName ?? defaultProjectName;
   const navigate = useNavigate();
+  const [accessToken, setAccessToken] = useAuthToken();
+  const params = useParams();
 
-  const logout = () => {
-    sessionStorage.removeItem("auth");
+  const [useTaskGroups, setTaskGroups] = useState<TaskGroup[]>([]);
+  const [useTasks, setTasks] = useState<Task[]>([]);
+  const [tasksCounter, setTasksCounter] = useState<
+    { groupId: number; total: number }[]
+  >([]);
+
+  const title = params.workspaceName || defaultWorkspaceName;
+
+  useEffect(() => {
+    workspace
+      .getWorkspaceByName(accessToken!, title)
+      .then((res) => {
+        setTaskGroups(
+          res.groups.map<TaskGroup>((g) => ({
+            state: "Idle",
+            groupId: g.groupId,
+            name: g.name,
+            createdAt: g.createdAt,
+            createdBy: g.createdBy,
+            updatedAt: g.updatedAt,
+            updatedBy: g.updatedBy,
+            workspaceId: res.workspaceId,
+          }))
+        );
+
+        setTasks(
+          res.groups.flatMap((g) => {
+            return g.tasks.map<Task>((t) => ({
+              taskGroupId: g.groupId,
+              taskId: t.taskId,
+              title: t.title,
+              dueDate: t.dueDate,
+              assignedToUserId: t.assignedToUserId,
+              createdBy: t.createdBy,
+              createdAt: t.createdAt,
+              updatedBy: t.updatedBy,
+              updatedAt: t.updatedAt,
+              description: t.description,
+              editing: false,
+              assignedTo: t.assignedTo,
+              workspaceId: res.workspaceId,
+            }));
+          })
+        );
+
+        setTasksCounter(
+          res.groups.map((g) => ({
+            groupId: g.groupId,
+            total: g.tasks.length,
+          }))
+        );
+      })
+      .catch((err) => {
+        console.error("Failed to fetch workspace:", err);
+      });
+  }, [accessToken, title]);
+
+  const handleLogout = async () => {
+    await identity.logout();
+    setAccessToken(null);
     navigate("/login");
   };
-
-  const [useTaskGroups, setTaskGroups] = useState<TaskGroup[]>([
-    { groupId: 1, name: "TO DO", state: "Idle" },
-    { groupId: 2, name: "In Progress", state: "Idle" },
-    { groupId: 3, name: "In Review", state: "Idle" },
-    { groupId: 4, name: "Done", state: "Idle" },
-  ]);
-
-  const [useTasks, setTasks] = useState<Task[]>([
-    {
-      taskGroupId: 1,
-      taskId: 1,
-      title: "Task 1",
-      date: new Date(),
-      assigned_to: null,
-      editing: false,
-    },
-    {
-      taskGroupId: 2,
-      taskId: 2,
-      title: "Task 2",
-      date: new Date(),
-      assigned_to: null,
-      editing: false,
-    },
-  ]);
-
-  const [tasksCounter, setTasksCounter] = useState([
-    { groupId: 1, total: 1 },
-    { groupId: 2, total: 1 },
-    { groupId: 3, total: 0 },
-    { groupId: 4, total: 0 },
-  ]);
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Layout.Header className="flex justify-between items-center">
         <div className="text-white font-bold text-xl">Task Manager</div>
-        <Button onClick={logout}>Logout</Button>
+        <Button onClick={handleLogout}>Logout</Button>
       </Layout.Header>
       <Layout>
         <Sidebar />
@@ -123,9 +138,7 @@ export default function Home() {
                     group={group}
                     tasksCounter={tasksCounter}
                     setTasksCounter={setTasksCounter}
-                    useTasks={useTasks.filter(
-                      (task) => task.taskGroupId === group.groupId
-                    )}
+                    useTasks={useTasks}
                     setTasks={setTasks}
                     setTaskGroups={setTaskGroups}
                   />
@@ -141,20 +154,14 @@ export default function Home() {
 
 type TitleEditProps = {
   value?: string;
-  onValueChange?: ChangeEventHandler<HTMLInputElement>;
-  onPressEnter?: KeyboardEventHandler<HTMLInputElement>;
+  onFinish?: (val: { title: string }) => void;
 };
 
-const TitleEdit = ({ value, onValueChange, onPressEnter }: TitleEditProps) => {
+const TitleEdit = ({ value, onFinish }: TitleEditProps) => {
   return (
-    <Form layout="horizontal" className="w-full">
-      <Form.Item noStyle className="w-full">
-        <Input
-          autoFocus
-          value={value}
-          onChange={onValueChange}
-          onPressEnter={onPressEnter}
-        />
+    <Form layout="horizontal" className="w-full" onFinish={onFinish}>
+      <Form.Item noStyle className="w-full" name="title" initialValue={value}>
+        <Input autoFocus />
       </Form.Item>
       <Flex
         justify="flex-end"
@@ -164,6 +171,7 @@ const TitleEdit = ({ value, onValueChange, onPressEnter }: TitleEditProps) => {
       >
         <Form.Item>
           <Button
+            htmlType="submit"
             type="primary"
             size="small"
             shape="round"
@@ -186,21 +194,30 @@ const TitleEdit = ({ value, onValueChange, onPressEnter }: TitleEditProps) => {
 type TaskFormValues = {
   title: string;
   date: Date | null;
+  assignedToUserId: number | null;
   assignedTo: string | null;
 };
+
 type TaskFormProps = {
   taskId?: React.Key;
   onFinish?: (val: TaskFormValues) => void;
   onBlur?: () => void;
 };
+
 const TaskForm = ({ onFinish, onBlur, taskId }: TaskFormProps) => {
-  const [assigned, setAssigned] = useState<string | null>(null);
+  const [assigned, setAssigned] = useState<identity.User | null>(null);
   const formRef = useRef<HTMLDivElement>(null);
   const [form] = Form.useForm<TaskFormValues>();
 
   useEffect(() => {
-    form.setFieldsValue({ assignedTo: assigned });
+    form.setFieldsValue({
+      assignedToUserId: assigned?.accountId || null,
+      assignedTo: assigned?.fullName || null,
+    });
   }, [assigned, form]);
+
+  const [isUserAssginedPopoverOpen, setIsUserAssginedPopoverOpen] =
+    useState(false);
 
   useEffect(() => {
     function handleEnterKey(e: KeyboardEvent) {
@@ -268,8 +285,16 @@ const TaskForm = ({ onFinish, onBlur, taskId }: TaskFormProps) => {
             placement="topRight"
             trigger="click"
             className="mb-4"
+            open={isUserAssginedPopoverOpen}
+            onOpenChange={setIsUserAssginedPopoverOpen}
             content={
-              <UserAssignPopover assigned={assigned} onAssigned={setAssigned} />
+              <UserAssignPopover
+                assigned={assigned?.fullName || null}
+                onAssigned={(e) => {
+                  setAssigned(e);
+                  setIsUserAssginedPopoverOpen(false);
+                }}
+              />
             }
             getPopupContainer={(node) => formRef.current || node}
           >
@@ -282,6 +307,9 @@ const TaskForm = ({ onFinish, onBlur, taskId }: TaskFormProps) => {
           <Form.Item name="assignedTo" noStyle hidden>
             <Input hidden />
           </Form.Item>
+          <Form.Item name="assignedToUserId" noStyle hidden>
+            <Input hidden />
+          </Form.Item>
         </Flex>
       </Form>
     </div>
@@ -290,25 +318,37 @@ const TaskForm = ({ onFinish, onBlur, taskId }: TaskFormProps) => {
 
 type UserAssignPopoverProps = {
   assigned: string | null;
-  onAssigned: (assigned: string) => void;
+  onAssigned: (assignedUser: identity.User) => void;
 };
-
 
 const UserAssignPopover = ({
   assigned,
   onAssigned,
 }: UserAssignPopoverProps) => {
+  const [accessToken] = useAuthToken();
   const [query, setQuery] = useState("");
 
-  const users = [
-    { id: 1, name: "Alice Johnson" },
-    { id: 2, name: "Bob Smith" },
-    { id: 3, name: "Carol Davis" },
-    { id: 4, name: "Daniel White" },
-  ];
+  const [users, setUsers] = useState<identity.User[]>([]);
+  const [nextUsers, setNextUsers] = useState<identity.User[]>([]);
+
+  useEffect(() => {
+    identity
+      .users(accessToken!, 5)
+      .then((data) => {
+        setUsers(data.users);
+
+        identity
+          .users(accessToken!, 5, data.users[data.users.length - 1]?.accountId)
+          .then((data) => {
+            setNextUsers(data.users);
+          })
+          .catch((error) => console.error(error));
+      })
+      .catch((error) => console.error(error));
+  }, [accessToken]);
 
   const filtered = users.filter((u) =>
-    u.name.toLowerCase().includes(query.toLowerCase())
+    u.fullName.toLowerCase().includes(query.toLowerCase())
   );
 
   return (
@@ -319,133 +359,50 @@ const UserAssignPopover = ({
         onChange={(e) => setQuery(e.target.value)}
         allowClear
       />
-      <InfiniteScroll
-        dataLength={filtered.length}
-        next={() => {}}
-        hasMore={false}
-        scrollableTarget="scrollableDiv"
-        loader={<h4>Loading...</h4>}
-      >
-        <List
-          dataSource={filtered.length > 0 ? filtered : users}
-          renderItem={(item) => (
-            <List.Item
-              className="hover:bg-gray-100 hover:cursor-pointer mx-2 rounded-md"
-              onClick={() => onAssigned(item.name)}
-            >
-              <List.Item.Meta avatar={<UserOutlined />} title={item.name} />
-              <Button
-                disabled={assigned === item.name}
-                onClick={() => onAssigned(item.name)}
+      <div>
+        <InfiniteScroll
+          dataLength={filtered.length}
+          next={() => {
+            setUsers((prev) => [...prev, ...nextUsers]);
+
+            identity
+              .users(
+                accessToken!,
+                5,
+                nextUsers[nextUsers.length - 1]?.accountId
+              )
+              .then((data) => {
+                setNextUsers(data.users);
+              })
+              .catch((error) => console.error(error));
+          }}
+          hasMore={nextUsers.length > 0}
+          scrollableTarget="scrollableDiv"
+          loader={<h4>Loading...</h4>}
+        >
+          <List
+            dataSource={filtered.length > 0 ? filtered : users}
+            renderItem={(item) => (
+              <List.Item
+                className="hover:bg-gray-100 hover:cursor-pointer mx-2 rounded-md"
+                onClick={() => onAssigned(item)}
               >
-                {assigned === item.name ? "Assigned" : "Assign"}
-              </Button>
-            </List.Item>
-          )}
-        />
-      </InfiniteScroll>
+                <List.Item.Meta
+                  avatar={<UserOutlined />}
+                  title={item.fullName}
+                />
+                <Button
+                  disabled={assigned === item.fullName}
+                  onClick={() => onAssigned(item)}
+                >
+                  {assigned === item.fullName ? "Assigned" : "Assign"}
+                </Button>
+              </List.Item>
+            )}
+          />
+        </InfiniteScroll>
+      </div>
     </Space>
-  );
-};
-
-const Sidebar = () => {
-  const [useProjects, setProjects] = useState([
-    { id: 1, name: defaultProjectName },
-  ]);
-  const [useProjectCreating, setProjectCreating] = useState(false);
-  const navigate = useNavigate();
-  const projectChildren = useProjects.map<ItemType>((val) => ({
-    key: val.id,
-    icon: null,
-    label: val.name,
-    onClick: () => navigate(`/${val.name}`),
-  }));
-
-  projectChildren.push({
-    key: useProjects.length + 1,
-    label: "New Project",
-    extra: <PlusOutlined className="hover:bg-gray-200 p-2 rounded-md" />,
-    onClick: () => setProjectCreating(true),
-  });
-
-  return (
-    <>
-      <Layout.Sider
-        className="bg-white p-4 hidden md:block"
-        style={{ background: "white" }}
-        width={250}
-      >
-        <Menu
-          mode="inline"
-          defaultOpenKeys={["1"]}
-          defaultSelectedKeys={["1"]}
-          items={[
-            {
-              key: "1",
-              icon: <RocketOutlined />,
-              label: "Project",
-              children: projectChildren,
-            },
-          ]}
-        />
-      </Layout.Sider>
-      <ProjectCreateModal
-        open={useProjectCreating}
-        onCancel={() => setProjectCreating(false)}
-        onOk={() => setProjectCreating(false)}
-        onFinish={(v) => {
-          setProjects((projects) => {
-            const newProject = {
-              id: projects.length + 1,
-              name: v.projectName,
-            };
-
-            return [...projects, newProject];
-          });
-        }}
-      />
-    </>
-  );
-};
-
-type FormProject = {
-  projectName: string;
-};
-type ProjectCreateProps = {
-  open: boolean;
-  onOk?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-  onCancel?:
-    | ((e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void)
-    | undefined;
-
-  onFinish?: (v: FormProject) => void;
-};
-
-const ProjectCreateModal = ({
-  open,
-  onOk,
-  onCancel,
-  onFinish,
-}: ProjectCreateProps) => {
-  const [form] = Form.useForm<FormProject>();
-
-  return (
-    <Modal
-      title="Create New Project"
-      destroyOnHidden
-      open={open}
-      onOk={(e) => {
-        form.submit();
-        onOk?.(e);
-      }}
-      onCancel={onCancel}
-    >
-      <Form form={form} onFinish={onFinish} preserve={false}>
-        <Form.Item name="projectName" label="project name">
-          <Input placeholder="Enter project name" />
-        </Form.Item>
-      </Form>
-    </Modal>
   );
 };
 
@@ -460,8 +417,6 @@ type TaskGroupProps = {
   setTaskGroups: React.Dispatch<React.SetStateAction<TaskGroup[]>>;
 };
 
-
-
 const TaskGroup = ({
   group,
   tasksCounter,
@@ -470,18 +425,31 @@ const TaskGroup = ({
   setTasks,
   setTaskGroups,
 }: TaskGroupProps) => {
+  const [accessToken] = useAuthToken();
+
   const [, drop] = useDrop(
     () => ({
       accept: "task",
-      drop: (item: {id: number}) =>
+      drop: async (item: { id: number }) => {
+        const old = useTasks.find((v) => v.taskId == item.id);
+        if (old)
+          await workspace.updateTask(accessToken!, {
+            workspaceId: old.workspaceId,
+            groupId: old.taskGroupId,
+            taskId: old.taskId,
+            toGroupId: group.groupId,
+          });
+
         setTasks((tasks) => {
           const t = tasks.find((val) => val.taskId === item.id);
           if (t) t.taskGroupId = group.groupId;
           return [...tasks];
-        }),
+        });
+      },
     }),
     []
   );
+
   return (
     <Card
       ref={drop}
@@ -514,24 +482,24 @@ const TaskGroup = ({
           {group.state === "Naming" ? (
             <TitleEdit
               value={group.name}
-              onValueChange={(e) => {
+              onFinish={async (val) => {
+                await workspace.updateGroup(
+                  accessToken!,
+                  group.workspaceId,
+                  group.groupId,
+                  val.title
+                );
                 setTaskGroups((values) => {
                   const found = values.find(
                     (item) => item.groupId === group.groupId
                   );
-                  if (found) found.name = e.target.value;
+                  if (found) {
+                    found.name = val.title;
+                    found.state = "Idle";
+                  }
                   return [...values];
                 });
               }}
-              onPressEnter={() =>
-                setTaskGroups((values) => {
-                  const found = values.find(
-                    (item) => item.groupId === group.groupId
-                  );
-                  if (found) found.state = "Idle";
-                  return [...values];
-                })
-              }
             />
           ) : (
             <>
@@ -564,18 +532,26 @@ const TaskGroup = ({
           })}
         {group.state === "Creating" ? (
           <TaskForm
-            onFinish={(val) => {
-              setTasks((values) => {
-                const newtask = {
-                  taskGroupId: group.groupId,
-                  taskId: values.length + 1,
-                  title: val.title,
-                  date: val.date,
-                  assigned_to: val.assignedTo,
-                  editing: false,
-                };
+            onFinish={async (val) => {
+              const res = await workspace.createTask(accessToken!, {
+                workspaceId: group.workspaceId,
+                groupId: group.groupId,
+                title: val.title,
+                dueDate: val.date || undefined,
+                assignedToUserId: val.assignedToUserId || undefined,
+              });
 
-                return [...values, newtask];
+              setTasks((values) => {
+                return [
+                  ...values,
+                  {
+                    ...res,
+                    taskGroupId: group.groupId,
+                    editing: false,
+                    assignedTo: val.assignedTo || null,
+                    workspaceId: group.workspaceId,
+                  },
+                ];
               });
 
               setTaskGroups((values) => {
@@ -649,6 +625,7 @@ type TaskCardProps = {
 };
 
 const TaskCard = ({ task, setTask }: TaskCardProps) => {
+  const [accessToken] = useAuthToken();
   const dateFormater = new Intl.DateTimeFormat("en-US", {
     dateStyle: "medium",
   });
@@ -658,9 +635,10 @@ const TaskCard = ({ task, setTask }: TaskCardProps) => {
     item: { id: task.taskId },
   }));
 
+  const [userAssignedPopover, setUserAssignedPopover] = useState(false);
+
   return (
     <>
-      {/* <DragPreviewImage connect={preview} src={knightImage} /> */}
       <Card
         ref={dragTask}
         style={{ opacity: isDragging ? 0.5 : 1 }}
@@ -680,22 +658,24 @@ const TaskCard = ({ task, setTask }: TaskCardProps) => {
             {task.editing ? (
               <TitleEdit
                 value={task.title}
-                onValueChange={(e) =>
+                onFinish={async (val) => {
+                  await workspace.updateTask(accessToken!, {
+                    workspaceId: task.taskGroupId,
+                    groupId: task.taskGroupId,
+                    taskId: task.taskId,
+                    title: val.title,
+                  });
+
                   setTask((tasks) => {
-                    const t = tasks.find((val) => val.taskId === task.taskId);
-                    if (t) t.title = e.target.value;
+                    const t = tasks.find((v) => v.taskId === task.taskId);
+                    if (t) {
+                      t.title = val.title;
+                      t.editing = false;
+                    }
 
                     return [...tasks];
-                  })
-                }
-                onPressEnter={() =>
-                  setTask((tasks) => {
-                    const t = tasks.find((val) => val.taskId === task.taskId);
-                    if (t) t.editing = false;
-
-                    return [...tasks];
-                  })
-                }
+                  });
+                }}
               />
             ) : (
               <Flex
@@ -733,9 +713,9 @@ const TaskCard = ({ task, setTask }: TaskCardProps) => {
           </>
         }
       >
-        {task.date ? (
+        {task.dueDate ? (
           <Tooltip
-            title={`Due date on ${dateFormater.format(new Date(task.date))}`}
+            title={`Due date on ${dateFormater.format(new Date(task.dueDate))}`}
           >
             <Flex
               justify="flex-start"
@@ -745,7 +725,7 @@ const TaskCard = ({ task, setTask }: TaskCardProps) => {
             >
               <CalendarOutlined className="ml-2" />
               <Typography.Text className="text-gray-400 text-sm mr-2">
-                {dateFormater.format(new Date(task.date))}
+                {dateFormater.format(new Date(task.dueDate))}
               </Typography.Text>
             </Flex>
           </Tooltip>
@@ -756,30 +736,43 @@ const TaskCard = ({ task, setTask }: TaskCardProps) => {
           <Popover
             placement="topRight"
             trigger="click"
+            open={userAssignedPopover}
+            onOpenChange={setUserAssignedPopover}
             content={
               <UserAssignPopover
-                assigned={task.assigned_to}
-                onAssigned={(val) => {
+                assigned={task.assignedTo}
+                onAssigned={async (val) => {
+                  await workspace.updateTask(accessToken!, {
+                    workspaceId: task.taskGroupId,
+                    groupId: task.taskGroupId,
+                    taskId: task.taskId,
+                    assignedToUserId: val.accountId,
+                  });
+
                   setTask((tasks) => {
                     const found = tasks.find((v) => v.taskId === task.taskId);
-                    if (found) found.assigned_to = val;
+                    if (found) {
+                      found.assignedToUserId = val.accountId;
+                      found.assignedTo = val.fullName;
+                    }
                     return [...tasks];
                   });
+                  setUserAssignedPopover(false);
                 }}
               />
             }
           >
             <Tooltip
               title={
-                task.assigned_to
-                  ? `Assigned to ${task.assigned_to}`
+                task.assignedTo
+                  ? `Assigned to ${task.assignedTo}`
                   : "Unassigned"
               }
               placement="bottom"
             >
               <div
                 className={`rounded-md bg-gray-100 hover:bg-gray-200 w-8 h-8 flex justify-center items-center text-gray-400 hover:cursor-pointer ${
-                  task.assigned_to ? "border-2 border-blue-300" : null
+                  task.assignedTo ? "border-2 border-blue-300" : null
                 }`}
               >
                 <UserOutlined />
