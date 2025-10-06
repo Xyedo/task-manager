@@ -84,7 +84,7 @@ class IdentityUsecase:
             return RefreshResponse(
                 accessToken=self.__token_manager.create_access_token(
                     TokenPayload(
-                        user_id=token_data.user_id,
+                        user_id=token_data.id,
                         username=token_data.username,
                         tenant_id=token_data.tenant_id,
                     )
