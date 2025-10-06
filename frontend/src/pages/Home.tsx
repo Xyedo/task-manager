@@ -431,18 +431,20 @@ const TaskGroup = ({
     () => ({
       accept: "task",
       drop: async (item: { id: number }) => {
-        const old = useTasks.find((v) => v.taskId == item.id);
-        if (old)
-          await workspace.updateTask(accessToken!, {
-            workspaceId: old.workspaceId,
-            groupId: old.taskGroupId,
-            taskId: old.taskId,
-            toGroupId: group.groupId,
-          });
-
         setTasks((tasks) => {
           const t = tasks.find((val) => val.taskId === item.id);
-          if (t) t.taskGroupId = group.groupId;
+
+          if (t) {
+            workspace
+              .updateTask(accessToken!, {
+                workspaceId: t.workspaceId,
+                groupId: t.taskGroupId,
+                taskId: t.taskId,
+                toGroupId: group.groupId,
+              })
+              .catch((err) => console.error(err));
+            t.taskGroupId = group.groupId;
+          }
           return [...tasks];
         });
       },

@@ -1,7 +1,7 @@
 
 init-deps:
 	@echo "Initializing the project..."
-	@cd backend && python -m venv venv && . venv/bin/activate && pip install -r requirements.txt
+	@cd backend && python -m venv venv && . venv/bin/activate && pip install -r requirement.txt
 	@cd frontend && npm install
 	@echo "Init Deps."
 
@@ -26,7 +26,7 @@ run-backend:
 
 run-frontend:
 	@echo "Starting the frontend server..."
-	@cd frontend && npm start
+	@cd frontend && npm run dev
 	@echo "Frontend server is running."
 
 

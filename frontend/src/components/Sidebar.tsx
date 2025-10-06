@@ -10,9 +10,10 @@ export const Sidebar = () => {
   const navigate = useNavigate();
   const [accessToken] = useAuthToken();
   const location = useLocation();
-  console.log(location.pathname.slice(1))
   const [useProjects, setProjects] = useState<workspace.Workspace[]>([]);
 
+  const defaultSelectedKeys = decodeURIComponent(location.pathname.slice(1)) || "My Kanban Project";
+  
   useEffect(() => {
     workspace
       .listWorkspaces(accessToken!)
@@ -47,7 +48,7 @@ export const Sidebar = () => {
         <Menu
           mode="inline"
           defaultOpenKeys={["workspaces-1"]}
-          defaultSelectedKeys={[location.pathname.slice(1)]}
+          defaultSelectedKeys={[defaultSelectedKeys]}
           items={[
             {
               key: "workspaces-1",
