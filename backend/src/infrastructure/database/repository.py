@@ -3,7 +3,7 @@ import os
 from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import sessionmaker, scoped_session, Session
-from typing import Annotated, Generator
+from typing import Annotated, Any, Generator
 
 
 class Repository:
@@ -19,8 +19,8 @@ class Repository:
         )
 
     @contextmanager
-    def session(self) -> Generator[Annotated[Session, AbstractContextManager[Session]]]:
-        session: AbstractContextManager[Session] = self.__session_factory()
+    def session(self) -> Generator[Any, Any, Annotated[Session, AbstractContextManager[Session]]]:
+        session: Annotated[Session, AbstractContextManager[Session]] = self.__session_factory()
         try:
             yield session
             session.commit()

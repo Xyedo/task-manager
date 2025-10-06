@@ -2,14 +2,17 @@ import { useAuthToken } from "@/hooks/useAuthToken";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Typography, Card, Space, Row, Col } from "antd";
 import * as identity from "@/api/identity";
+import { useNavigate } from "react-router";
 
 export default function Login() {
+  const navigate = useNavigate();
   const [form] = Form.useForm();
   const [, setAccessToken] = useAuthToken();
   const onFinish = async (values: { username: string; password: string }) => {
     try {
       const res = await identity.login(values.username, values.password);
       setAccessToken(res.accessToken);
+      navigate("/");
     } catch (err) {
       console.error("Login failed:", err);
       form.setFields([

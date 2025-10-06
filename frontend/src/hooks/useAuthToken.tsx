@@ -17,18 +17,11 @@ export function useAuthToken() {
   if (accessToken) {
     const [, payloadBase64] = accessToken.split(".");
     session = JSON.parse(atob(payloadBase64));
-  }
-
-
-  useEffect(() => {
-    if (!accessToken) return;
-
-    if (accessToken) {
-      navigate("/");
+  } else {
+    if (!accessToken) {
+      navigate("/login");
     }
-  }, [accessToken, navigate]);
-
-  
+  }
 
   useEffect(() => {
     const refreshToken = async () => {
