@@ -1,5 +1,5 @@
-from pydantic import BaseModel
+from src.common.model import Model
 
 
-class RefreshResponse(BaseModel):
+class RefreshResponse(Model):
     accessToken: str

@@ -117,16 +117,18 @@ It has two Domain:
   
   Due to Nature of this Assignments, the Methodology i've used is Manual End to End testing from frontend and backends
 
-
-  we should have to develop Unit Test on Each Usecases with database mocks,
-  Handler test on Usecase mocks and add integration test that that handles users flow
-
-  Because the Architecture of My Backend application is Ortogonal Architecture. its extensible to add unit test in the next iteration 
-
+  
+  After that I've Added unit test on Identity and Workspaces and load testing based on basic userflow
+  You can run the unit test with ``pytest -m unit``
+  and load twsting with 
+  ```
+  locust -f locustfile.py --host=http://localhost:8000 --users 5 --spawn-rate 1 --run-time 30s --headless
+  
+  ```
 
 
 ## API Performance and Optimization
-  the API Performance is has p99 under 100ms on Normal Load doing basic User flow
+  the API Performance is has p99 133ms with peak 100 concurent users accessing the same resources 
   
   The Optimization we can do when the scale coming is:
 
@@ -160,4 +162,4 @@ It has two Domain:
 
 
 ## Security Impact on Performance
-  Security Impact on Performance in REST application is just a noise compared to database contention and IO Bound with result on p99 still under 100ms
+  Security Impact on Performance in REST application is just a noise compared to database contention and IO Bound with result on average p99 is 141ms with peak 100 concurent users accessing the same resources, only increases about 10ms which is negligible

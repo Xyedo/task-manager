@@ -33,15 +33,48 @@ def main():
             )
             session.add(account)
 
-        account = Account(
+        # Create demo user for testing
+        user_account = Account(
             username="user",
             full_name="Demo User",
             email="user@example.com",
             hashed_password=hasher.hash("password"),
             tenant_id=tenant.tenant_id,
         )
-        session.add(account)
+        session.add(user_account)
+        
+        # Create admin user for load testing
+        admin_account = Account(
+            username="admin",
+            full_name="Admin User",
+            email="admin@example.com",
+            hashed_password=hasher.hash("adminpassword"),
+            tenant_id=tenant.tenant_id,
+        )
+        session.add(admin_account)
+        
+        # Create additional test users for load testing
+        test_users_data = [
+            ("testuser", "testpassword", "Test User", "testuser@example.com"),
+            ("loadtest1", "password123", "Load Test User 1", "loadtest1@example.com"),
+            ("loadtest2", "password123", "Load Test User 2", "loadtest2@example.com"),
+            ("loadtest3", "password123", "Load Test User 3", "loadtest3@example.com"),
+        ]
+        
+        for username, password, full_name, email in test_users_data:
+            test_account = Account(
+                username=username,
+                full_name=full_name,
+                email=email,
+                hashed_password=hasher.hash(password),
+                tenant_id=tenant.tenant_id,
+            )
+            session.add(test_account)
+        
         session.flush()
+        
+        # Use the regular user for workspace creation
+        account = user_account
 
         workspace = Workspaces(
             name="My Kanban Project",

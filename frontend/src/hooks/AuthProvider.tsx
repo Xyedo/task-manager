@@ -1,28 +1,37 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import * as identity from "@/api/identity";
 import { useNavigate } from "react-router";
+import { AuthContext, type DecodedAccessToken } from "@/hooks/useAuthContext";
 
-type DecodedAccessToken = {
-  tenant_id: string;
-  id: number;
-  username: string;
-  iat: number;
-  exp?: number;
+export type AuthProviderProps = {
+  children: React.ReactNode;
 };
-
-export function useAuthToken() {
+export function Auth({ children }: AuthProviderProps) {
   const navigate = useNavigate();
-  const [accessToken, setAccessToken] = useState<string | null>(null);
+  const [accessToken, setAccessToken] = useState<string | null>(
+    localStorage.getItem("accessToken")
+  );
   let session: DecodedAccessToken | null = null;
   if (accessToken) {
     const [, payloadBase64] = accessToken.split(".");
     session = JSON.parse(atob(payloadBase64));
-  } else {
+  }
+
+  //manage localStorage
+  useEffect(() => {
+    if (accessToken) {
+      localStorage.setItem("accessToken", accessToken);
+    }
+  }, [accessToken]);
+
+  // manage auth
+  useEffect(() => {
     if (!accessToken) {
       navigate("/login");
     }
-  }
+  }, [accessToken, navigate]);
 
+  //manage refreshToken
   useEffect(() => {
     const refreshToken = async () => {
       try {
@@ -46,5 +55,14 @@ export function useAuthToken() {
     }
   }, [session]);
 
-  return [accessToken, setAccessToken, session] as const;
+  return (
+    <AuthContext
+      value={{
+        session: { accessToken, user: session },
+        setAccessToken,
+      }}
+    >
+      {children}
+    </AuthContext>
+  );
 }

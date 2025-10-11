@@ -1,11 +1,11 @@
-from pydantic import BaseModel
+from src.common.model import Model
 
 
-class LoginRequest(BaseModel):
+class LoginRequest(Model):
     username: str
     password: str
 
 
-class LoginResponse(BaseModel):
+class LoginResponse(Model):
     accessToken: str
     refreshToken: str

@@ -27,7 +27,6 @@ class JwtTokenManager:
         payload["iat"] = int(time.time())
         if os.environ.get("ENV") == "production":
             payload["exp"] = int(time.time()) + self.__access_token_expiry_seconds
-
         return jwt.encode(payload, self.__access_token_secret, algorithm="HS256")
 
     def create_refresh_token(self, data: TokenPayload) -> str:

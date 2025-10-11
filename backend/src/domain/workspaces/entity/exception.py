@@ -1,4 +1,7 @@
-
+class WorkspaceAlreadyExists(Exception):
+    def __init__(self, message="Workspace with this name already exists"):
+        self.message = message
+        super().__init__(self.message)
 
 class WorkspaceNotFound(Exception):
     def __init__(self, message="Workspace not found"):

@@ -1,0 +1,378 @@
+Method,Name,Error,Occurrences
+PATCH,/api/v1/workspaces/1/groups/3/tasks/126,CatchResponseError('Move task failed: 404'),2
+PATCH,/api/v1/workspaces/1/groups/3/tasks/392,CatchResponseError('Update task failed: 404'),2
+PATCH,/api/v1/workspaces/1/groups/2/tasks/336,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/37,CatchResponseError('Update task failed: 404'),2
+PATCH,/api/v1/workspaces/1/groups/3/tasks/191,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/72,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/878,CatchResponseError('Move task failed: 404'),2
+DELETE,/api/v1/workspaces/1/groups/2/tasks/1534,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/2/tasks/926,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/3/tasks/828,CatchResponseError('Admin delete task failed: 204'),1
+GET,/api/v1/identity/users,CatchResponseError('Get users failed: 0'),1
+DELETE,/api/v1/workspaces/1/groups/2/tasks/2059,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/139,CatchResponseError('Update task failed: 404'),2
+PATCH,/api/v1/workspaces/1/groups/4/tasks/825,CatchResponseError('Move task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/2/tasks/188,CatchResponseError('Update task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/4/tasks/193,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/2/tasks/239,CatchResponseError('Move task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/946,CatchResponseError('Update task failed: 404'),2
+DELETE,/api/v1/workspaces/1/groups/3/tasks/47,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/95,CatchResponseError('Move task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/752,CatchResponseError('Update task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/2/tasks/1517,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/4/tasks/1064,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/169,CatchResponseError('Update task failed: 404'),2
+PATCH,/api/v1/workspaces/1/groups/1/tasks/303,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/1362,CatchResponseError('Move task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/1316,CatchResponseError('Update task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/2/tasks/1900,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/905,CatchResponseError('Move task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/3/tasks/579,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/4/tasks/661,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/1/tasks/261,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/4/tasks/1199,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/2/tasks/704,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/4/tasks/1402,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/281,CatchResponseError('Move task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/608,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/1178,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/114,CatchResponseError('Move task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/4/tasks/77,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/422,CatchResponseError('Update task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/4/tasks/1723,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/561,CatchResponseError('Update task failed: 404'),2
+DELETE,/api/v1/workspaces/1/groups/1/tasks/273,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/1/tasks/1179,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/2071,CatchResponseError('Move task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/2050,CatchResponseError('Update task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/2/tasks/655,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/2/tasks/1354,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/1740,CatchResponseError('Update task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/2/tasks/75,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/380,CatchResponseError('Move task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/2/tasks/2323,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/4/tasks/357,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/1/tasks/2444,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/3/tasks/823,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/110,CatchResponseError('Update task failed: 404'),2
+DELETE,/api/v1/workspaces/1/groups/3/tasks/1997,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/498,CatchResponseError('Move task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/117,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/2/tasks/70,CatchResponseError('Update task failed: 404'),4
+PATCH,/api/v1/workspaces/1/groups/3/tasks/1137,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/50,CatchResponseError('Update task failed: 404'),3
+PATCH,/api/v1/workspaces/1/groups/2/tasks/454,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/432,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/1010,CatchResponseError('Move task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/496,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/2/tasks/833,CatchResponseError('Move task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/1567,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/2/tasks/352,CatchResponseError('Move task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/585,CatchResponseError('Update task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/4/tasks/711,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/197,CatchResponseError('Update task failed: 404'),4
+DELETE,/api/v1/workspaces/1/groups/2/tasks/287,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/523,CatchResponseError('Update task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/3/tasks/82,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/4/tasks/1511,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/2/tasks/81,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/2/tasks/131,CatchResponseError('Move task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/25,CatchResponseError('Move task failed: 404'),4
+PATCH,/api/v1/workspaces/1/groups/1/tasks/542,CatchResponseError('Move task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/3/tasks/2138,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/2/tasks/1346,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/617,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/1177,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/155,CatchResponseError('Move task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/396,CatchResponseError('Update task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/2/tasks/604,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/4/tasks/2446,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/683,CatchResponseError('Move task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/103,CatchResponseError('Update task failed: 404'),2
+DELETE,/api/v1/workspaces/1/groups/1/tasks/803,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/2/tasks/189,CatchResponseError('Update task failed: 404'),2
+PATCH,/api/v1/workspaces/1/groups/2/tasks/530,CatchResponseError('Update task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/1/tasks/546,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/717,CatchResponseError('Move task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/1137,CatchResponseError('Move task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/587,CatchResponseError('Move task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/330,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/478,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/5,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/110,CatchResponseError('Move task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/613,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/485,CatchResponseError('Update task failed: 404'),3
+PATCH,/api/v1/workspaces/1/groups/2/tasks/57,CatchResponseError('Update task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/4/tasks/1454,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/4/tasks/2371,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/3/tasks/1167,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/155,CatchResponseError('Update task failed: 404'),2
+PATCH,/api/v1/workspaces/1/groups/2/tasks/153,CatchResponseError('Update task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/1/tasks/1217,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/863,CatchResponseError('Update task failed: 404'),2
+PATCH,/api/v1/workspaces/1/groups/2/tasks/296,CatchResponseError('Update task failed: 404'),3
+DELETE,/api/v1/workspaces/1/groups/4/tasks/157,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/2/tasks/741,CatchResponseError('Move task failed: 404'),4
+DELETE,/api/v1/workspaces/1/groups/3/tasks/1984,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/148,CatchResponseError('Update task failed: 404'),2
+PATCH,/api/v1/workspaces/1/groups/2/tasks/751,CatchResponseError('Update task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/3/tasks/345,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/2/tasks/94,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/1/tasks/1118,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/4/tasks/1090,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/557,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/662,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/2/tasks/189,CatchResponseError('Move task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/3/tasks/1508,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/2/tasks/1536,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/2/tasks/145,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/190,CatchResponseError('Move task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/3/tasks/222,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/1573,CatchResponseError('Move task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/896,CatchResponseError('Update task failed: 404'),2
+PATCH,/api/v1/workspaces/1/groups/4/tasks/235,CatchResponseError('Move task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/2/tasks/765,CatchResponseError('Update task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/2/tasks/1556,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/3/tasks/2458,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/2/tasks/1135,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/3/tasks/781,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/3/tasks/1332,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/587,CatchResponseError('Update task failed: 404'),3
+DELETE,/api/v1/workspaces/1/groups/4/tasks/1103,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/159,CatchResponseError('Move task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/2/tasks/2256,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/332,CatchResponseError('Move task failed: 404'),3
+PATCH,/api/v1/workspaces/1/groups/1/tasks/34,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/86,CatchResponseError('Update task failed: 404'),7
+PATCH,/api/v1/workspaces/1/groups/1/tasks/127,CatchResponseError('Update task failed: 404'),2
+PATCH,/api/v1/workspaces/1/groups/3/tasks/651,CatchResponseError('Move task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/1/tasks/1864,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/2/tasks/1268,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/2/tasks/965,CatchResponseError('Update task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/2/tasks/2222,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/2/tasks/1432,CatchResponseError('Update task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/2/tasks/2184,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/1/tasks/1512,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/2/tasks/2082,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/96,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/2/tasks/27,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/465,CatchResponseError('Update task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/4/tasks/936,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/3/tasks/1651,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/3/tasks/1254,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/1/tasks/2267,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/3/tasks/2054,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/2/tasks/253,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/1006,CatchResponseError('Update task failed: 404'),2
+PATCH,/api/v1/workspaces/1/groups/4/tasks/281,CatchResponseError('Update task failed: 404'),3
+PATCH,/api/v1/workspaces/1/groups/4/tasks/606,CatchResponseError('Update task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/2/tasks/744,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/1786,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/85,CatchResponseError('Move task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/143,CatchResponseError('Move task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/1786,CatchResponseError('Move task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/92,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/498,CatchResponseError('Update task failed: 404'),2
+PATCH,/api/v1/workspaces/1/groups/4/tasks/539,CatchResponseError('Move task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/190,CatchResponseError('Update task failed: 404'),2
+POST,/api/v1/workspaces/,CatchResponseError('Create workspace failed: 0'),2
+DELETE,/api/v1/workspaces/1/groups/1/tasks/83,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/2/tasks/153,CatchResponseError('Move task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/1151,CatchResponseError('Move task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/4/tasks/993,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/3/tasks/234,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/1/tasks/1725,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/1/tasks/147,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/85,CatchResponseError('Update task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/1/tasks/982,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/2/tasks/550,CatchResponseError('Update task failed: 404'),2
+PATCH,/api/v1/workspaces/1/groups/1/tasks/542,CatchResponseError('Update task failed: 404'),2
+DELETE,/api/v1/workspaces/1/groups/1/tasks/635,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/2/tasks/198,CatchResponseError('Move task failed: 404'),3
+DELETE,/api/v1/workspaces/1/groups/3/tasks/79,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/2/tasks/1889,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/2/tasks/238,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/1085,CatchResponseError('Move task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/1/tasks/135,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/224,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/1160,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/1275,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/2/tasks/70,CatchResponseError('Move task failed: 404'),2
+DELETE,/api/v1/workspaces/1/groups/1/tasks/1403,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/1/tasks/2208,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/557,CatchResponseError('Move task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/4/tasks/130,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/2/tasks/939,CatchResponseError('Update task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/1/tasks/2009,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/917,CatchResponseError('Update task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/4/tasks/1760,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/284,CatchResponseError('Move task failed: 404'),2
+PATCH,/api/v1/workspaces/1/groups/4/tasks/44,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/2/tasks/81,CatchResponseError('Move task failed: 404'),2
+PATCH,/api/v1/workspaces/1/groups/2/tasks/283,CatchResponseError('Update task failed: 404'),2
+DELETE,/api/v1/workspaces/1/groups/1/tasks/289,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/2/tasks/2115,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/128,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/86,CatchResponseError('Move task failed: 404'),2
+PATCH,/api/v1/workspaces/1/groups/1/tasks/332,CatchResponseError('Update task failed: 404'),4
+PATCH,/api/v1/workspaces/1/groups/2/tasks/1774,CatchResponseError('Move task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/76,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/785,CatchResponseError('Update task failed: 404'),2
+PATCH,/api/v1/workspaces/1/groups/1/tasks/95,CatchResponseError('Update task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/4/tasks/500,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/1847,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/1159,CatchResponseError('Move task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/1/tasks/782,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/4/tasks/1912,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/66,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/19,CatchResponseError('Move task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/1/tasks/150,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/1/tasks/1012,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/548,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/1149,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/676,CatchResponseError('Update task failed: 404'),3
+PATCH,/api/v1/workspaces/1/groups/3/tasks/136,CatchResponseError('Update task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/4/tasks/1380,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/2/tasks/494,CatchResponseError('Move task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/2/tasks/177,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/4/tasks/1083,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/2/tasks/275,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/235,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/25,CatchResponseError('Update task failed: 404'),3
+DELETE,/api/v1/workspaces/1/groups/3/tasks/847,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/274,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/1362,CatchResponseError('Update task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/3/tasks/165,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/1/tasks/456,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/3/tasks/838,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/97,CatchResponseError('Move task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/1/tasks/1473,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/3/tasks/240,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/878,CatchResponseError('Update task failed: 404'),2
+PATCH,/api/v1/workspaces/1/groups/4/tasks/335,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/2/tasks/419,CatchResponseError('Move task failed: 404'),2
+PATCH,/api/v1/workspaces/1/groups/3/tasks/745,CatchResponseError('Update task failed: 404'),3
+DELETE,/api/v1/workspaces/1/groups/3/tasks/1325,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/4/tasks/13,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/4/tasks/1290,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/315,CatchResponseError('Move task failed: 404'),2
+DELETE,/api/v1/workspaces/1/groups/3/tasks/1716,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/255,CatchResponseError('Move task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/311,CatchResponseError('Move task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/516,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/2/tasks/1542,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/80,CatchResponseError('Move task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/173,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/380,CatchResponseError('Update task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/3/tasks/2284,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/61,CatchResponseError('Update task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/2/tasks/646,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/2/tasks/1028,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/1081,CatchResponseError('Move task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/257,CatchResponseError('Update task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/2/tasks/783,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/2/tasks/765,CatchResponseError('Move task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/515,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/2/tasks/283,CatchResponseError('Move task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/662,CatchResponseError('Move task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/369,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/651,CatchResponseError('Update task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/1/tasks/507,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/671,CatchResponseError('Update task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/1/tasks/1548,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/1603,CatchResponseError('Update task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/3/tasks/1781,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/418,CatchResponseError('Update task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/1/tasks/736,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/361,CatchResponseError('Update task failed: 404'),2
+PATCH,/api/v1/workspaces/1/groups/2/tasks/553,CatchResponseError('Move task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/3/tasks/573,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/2/tasks/316,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/1/tasks/870,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/2/tasks/1116,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/657,CatchResponseError('Update task failed: 404'),2
+PATCH,/api/v1/workspaces/1/groups/2/tasks/1169,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/1010,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/159,CatchResponseError('Update task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/2/tasks/2308,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/414,CatchResponseError('Move task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/344,CatchResponseError('Update task failed: 404'),2
+PATCH,/api/v1/workspaces/1/groups/1/tasks/137,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/2/tasks/389,CatchResponseError('Update task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/1/tasks/405,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/695,CatchResponseError('Move task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/2/tasks/493,CatchResponseError('Update task failed: 404'),2
+DELETE,/api/v1/workspaces/1/groups/1/tasks/2228,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/412,CatchResponseError('Update task failed: 404'),2
+PATCH,/api/v1/workspaces/1/groups/1/tasks/752,CatchResponseError('Move task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/114,CatchResponseError('Update task failed: 404'),3
+DELETE,/api/v1/workspaces/1/groups/2/tasks/340,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/173,CatchResponseError('Move task failed: 404'),2
+PATCH,/api/v1/workspaces/1/groups/4/tasks/363,CatchResponseError('Update task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/2/tasks/1925,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/2/tasks/2220,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/126,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/605,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/97,CatchResponseError('Update task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/3/tasks/1630,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/2/tasks/614,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/169,CatchResponseError('Move task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/4/tasks/41,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/322,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/768,CatchResponseError('Update task failed: 404'),3
+DELETE,/api/v1/workspaces/1/groups/2/tasks/355,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/1/tasks/933,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/284,CatchResponseError('Update task failed: 404'),3
+PATCH,/api/v1/workspaces/1/groups/1/tasks/683,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/1080,CatchResponseError('Update task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/4/tasks/2297,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/4/tasks/1715,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/426,CatchResponseError('Update task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/1/tasks/29,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/2/tasks/887,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/303,CatchResponseError('Move task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/2/tasks/242,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/1368,CatchResponseError('Move task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/2/tasks/935,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/985,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/478,CatchResponseError('Move task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/585,CatchResponseError('Move task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/392,CatchResponseError('Move task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/1/tasks/1594,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/2/tasks/741,CatchResponseError('Update task failed: 404'),5
+PATCH,/api/v1/workspaces/1/groups/2/tasks/607,CatchResponseError('Move task failed: 404'),2
+PATCH,/api/v1/workspaces/1/groups/3/tasks/330,CatchResponseError('Move task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/657,CatchResponseError('Move task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/1/tasks/1680,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/516,CatchResponseError('Move task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/2/tasks/419,CatchResponseError('Update task failed: 404'),7
+DELETE,/api/v1/workspaces/1/groups/1/tasks/850,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/758,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/718,CatchResponseError('Update task failed: 404'),2
+PATCH,/api/v1/workspaces/1/groups/1/tasks/1166,CatchResponseError('Update task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/2/tasks/760,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/2/tasks/181,CatchResponseError('Update task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/2/tasks/1657,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/3/tasks/1761,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/3/tasks/394,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/496,CatchResponseError('Move task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/1045,CatchResponseError('Move task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/61,CatchResponseError('Move task failed: 404'),2
+PATCH,/api/v1/workspaces/1/groups/2/tasks/442,CatchResponseError('Update task failed: 404'),2
+PATCH,/api/v1/workspaces/1/groups/1/tasks/48,CatchResponseError('Move task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/3/tasks/1721,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/4/tasks/1190,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/1274,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/2/tasks/246,CatchResponseError('Move task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/1/tasks/309,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/4/tasks/16,CatchResponseError('Move task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/2/tasks/296,CatchResponseError('Move task failed: 404'),1
+DELETE,/api/v1/workspaces/1/groups/4/tasks/22,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/4/tasks/2262,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/2/tasks/325,CatchResponseError('Admin delete task failed: 204'),1
+DELETE,/api/v1/workspaces/1/groups/4/tasks/596,CatchResponseError('Admin delete task failed: 204'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/121,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/2/tasks/526,CatchResponseError('Update task failed: 404'),1
+PATCH,/api/v1/workspaces/1/groups/3/tasks/139,CatchResponseError('Move task failed: 404'),1
+GET,/api/v1/workspaces/by-name/My%20Kanban%20Project,CatchResponseError('Get workspace by name failed: 0'),1

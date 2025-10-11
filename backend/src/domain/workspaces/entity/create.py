@@ -1,13 +1,14 @@
 import datetime
 from typing import Optional
-from pydantic import BaseModel
+
+from src.common.model import Model
 
 
-class WorkspaceRequest(BaseModel):
+class WorkspaceRequest(Model):
     name: str
 
 
-class WorkspaceResponse(BaseModel):
+class WorkspaceResponse(Model):
     workspaceId: int
     name: str
     createdAt: datetime.datetime

@@ -84,7 +84,7 @@ class IdentityUsecase:
             return RefreshResponse(
                 accessToken=self.__token_manager.create_access_token(
                     TokenPayload(
-                        user_id=token_data.id,
+                        id=token_data.id,
                         username=token_data.username,
                         tenant_id=token_data.tenant_id,
                     )
@@ -140,7 +140,7 @@ class IdentityUsecase:
         with self.__repository.session() as session:
             account = (
                 session.query(Account)
-                .where(Account.account_id == payload.user_id)
+                .where(Account.account_id == payload.id)
                 .first()
             )
             if not account:

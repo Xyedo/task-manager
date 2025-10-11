@@ -4,7 +4,7 @@ from src.domain.workspaces.entity.update_group import (
     UpdateGroupRequest,
     UpdateGroupResponse,
 )
-from src.domain.workspaces.entity.create_task import CreateTaskResponse
+from src.domain.workspaces.entity.create_task import TaskResponse
 from src.domain.workspaces.entity.create import WorkspaceRequest, WorkspaceResponse
 from src.common.token import TokenPayload
 from src.domain.workspaces.entity.pagination import (
@@ -21,6 +21,7 @@ from src.domain.workspaces.entity.task import (
 from src.domain.workspaces.entity.exception import (
     GroupNotFound,
     TaskNotFound,
+    WorkspaceAlreadyExists,
     WorkspaceNotFound,
 )
 from migrations.schema import Account, Group, Workspaces, Task
@@ -74,6 +75,12 @@ class WorkspaceUsecase:
     ) -> WorkspaceResponse:
 
         with self.__repository.session() as session:
+            if session.query(Workspaces).where(
+                Workspaces.name == workspace.name,
+                Workspaces.tenant_id == auth.tenant_id,
+            ).first():
+                raise WorkspaceAlreadyExists()
+            
             new_workspace = Workspaces(
                 name=workspace.name, tenant_id=auth.tenant_id, created_by=auth.id
             )
@@ -202,7 +209,7 @@ class WorkspaceUsecase:
                 updatedBy=existing_group.updated_by,
             )
 
-    def create_task(self, auth: TokenPayload, task: CreateTask) -> CreateTaskResponse:
+    def create_task(self, auth: TokenPayload, task: CreateTask) -> TaskResponse:
 
         with self.__repository.session() as session:
             workspace = (
@@ -236,7 +243,7 @@ class WorkspaceUsecase:
                 Account, Task.assigned_to_user_id == Account.account_id, isouter=True
             )
 
-            return CreateTaskResponse(
+            return TaskResponse(
                 taskId=new_task.task_id,
                 assignedToUserId=new_task.assigned_to_user_id,
                 assignedTo=(
@@ -301,7 +308,7 @@ class WorkspaceUsecase:
 
             return existing_task
 
-    def get_task(self, auth: TokenPayload, payload: GetTaskById) -> Task:
+    def get_task(self, auth: TokenPayload, payload: GetTaskById) -> TaskResponse:
 
         with self.__repository.session() as session:
             existing_task = (
@@ -310,7 +317,22 @@ class WorkspaceUsecase:
             if not existing_task or existing_task.tenant_id != auth.tenant_id:
                 raise TaskNotFound()
 
-            return existing_task
+            return TaskResponse(
+                taskId=existing_task.task_id,
+                title=existing_task.title,
+                description=existing_task.description,
+                dueDate=existing_task.due_date,
+                assignedToUserId=existing_task.assigned_to_user_id,
+                assignedTo=(
+                    existing_task.assigned_to_user.full_name
+                    if existing_task.assigned_to_user_id
+                    else None
+                ),
+                createdAt=existing_task.created_at,
+                updatedAt=existing_task.updated_at,
+                createdBy=existing_task.created_by,
+                updatedBy=existing_task.updated_by,
+            )
 
     def delete_task(self, auth: TokenPayload, payload: DeleteTask) -> None:
 

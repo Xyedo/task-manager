@@ -1,7 +1,7 @@
 import datetime
 from typing import Annotated, Union
+from src.common.model import Model
 from fastapi import APIRouter, Depends
-from pydantic import BaseModel
 from src.domain.workspaces.entity.update_group import (
     UpdateGroupPayload,
     UpdateGroupRequest,
@@ -9,7 +9,7 @@ from src.domain.workspaces.entity.update_group import (
 )
 from src.domain.workspaces.entity.create_task import (
     CreateTaskPayload,
-    CreateTaskResponse,
+    TaskResponse,
 )
 from src.domain.workspaces.entity.create import WorkspaceRequest, WorkspaceResponse
 from src.domain.workspaces.entity.list_group import (
@@ -85,7 +85,7 @@ def create_task(
     workspaceId: int,
     groupId: int,
     task: CreateTaskPayload,
-) -> CreateTaskResponse:
+) -> TaskResponse:
 
     return workspace_usecase.create_task(
         auth,
@@ -93,7 +93,7 @@ def create_task(
     )
 
 
-class UpdateTaskPayload(BaseModel):
+class UpdateTaskPayload(Model):
     title: Union[str, None] = None
     description: Union[str, None] = None
     dueDate: Union[datetime.datetime, None] = None
@@ -129,7 +129,7 @@ def get_task(
     workspaceId: int,
     groupId: int,
     taskId: int,
-) -> CreateTaskResponse:
+) -> TaskResponse:
     return workspace_usecase.get_task(auth, GetTaskById(taskId=taskId))
 
 

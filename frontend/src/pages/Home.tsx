@@ -16,7 +16,7 @@ import {
   Popover,
   List,
 } from "antd";
-import { useNavigate, useParams } from "react-router";
+import { useParams } from "react-router";
 import {
   CalendarOutlined,
   CheckOutlined,
@@ -28,7 +28,7 @@ import {
 } from "@ant-design/icons";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useDrag, useDrop } from "react-dnd";
-import { useAuthToken } from "@/hooks/useAuthToken";
+import { useAuth } from "@/hooks/useAuthContext";
 import { Sidebar } from "@/components/Sidebar";
 import * as workspace from "@/api/workspace";
 import * as identity from "@/api/identity";
@@ -51,8 +51,7 @@ export type HomeProps = {
   title?: string;
 };
 export default function Home() {
-  const navigate = useNavigate();
-  const [accessToken, setAccessToken] = useAuthToken();
+  const { session, setAccessToken } = useAuth();
   const params = useParams();
 
   const [useTaskGroups, setTaskGroups] = useState<TaskGroup[]>([]);
@@ -64,58 +63,65 @@ export default function Home() {
   const title = params.workspaceName || defaultWorkspaceName;
 
   useEffect(() => {
-    workspace
-      .getWorkspaceByName(accessToken!, title)
-      .then((res) => {
-        setTaskGroups(
-          res.groups.map<TaskGroup>((g) => ({
-            state: "Idle",
-            groupId: g.groupId,
-            name: g.name,
-            createdAt: g.createdAt,
-            createdBy: g.createdBy,
-            updatedAt: g.updatedAt,
-            updatedBy: g.updatedBy,
-            workspaceId: res.workspaceId,
-          }))
-        );
-
-        setTasks(
-          res.groups.flatMap((g) => {
-            return g.tasks.map<Task>((t) => ({
-              taskGroupId: g.groupId,
-              taskId: t.taskId,
-              title: t.title,
-              dueDate: t.dueDate,
-              assignedToUserId: t.assignedToUserId,
-              createdBy: t.createdBy,
-              createdAt: t.createdAt,
-              updatedBy: t.updatedBy,
-              updatedAt: t.updatedAt,
-              description: t.description,
-              editing: false,
-              assignedTo: t.assignedTo,
+    const inittialLoad = () => {
+      if (!session?.accessToken) return;
+      workspace
+        .getWorkspaceByName(session.accessToken, title)
+        .then((res) => {
+          setTaskGroups(
+            res.groups.map<TaskGroup>((g) => ({
+              state: "Idle",
+              groupId: g.groupId,
+              name: g.name,
+              createdAt: g.createdAt,
+              createdBy: g.createdBy,
+              updatedAt: g.updatedAt,
+              updatedBy: g.updatedBy,
               workspaceId: res.workspaceId,
-            }));
-          })
-        );
+            }))
+          );
 
-        setTasksCounter(
-          res.groups.map((g) => ({
-            groupId: g.groupId,
-            total: g.tasks.length,
-          }))
-        );
-      })
-      .catch((err) => {
-        console.error("Failed to fetch workspace:", err);
-      });
-  }, [accessToken, title]);
+          setTasks(
+            res.groups.flatMap((g) => {
+              return g.tasks.map<Task>((t) => ({
+                taskGroupId: g.groupId,
+                taskId: t.taskId,
+                title: t.title,
+                dueDate: t.dueDate,
+                assignedToUserId: t.assignedToUserId,
+                createdBy: t.createdBy,
+                createdAt: t.createdAt,
+                updatedBy: t.updatedBy,
+                updatedAt: t.updatedAt,
+                description: t.description,
+                editing: false,
+                assignedTo: t.assignedTo,
+                workspaceId: res.workspaceId,
+              }));
+            })
+          );
+
+          setTasksCounter(
+            res.groups.map((g) => ({
+              groupId: g.groupId,
+              total: g.tasks.length,
+            }))
+          );
+        })
+        .catch((err) => {
+          console.error("Failed to fetch workspace:", err);
+        });
+    };
+
+    inittialLoad();
+
+    const interval = setInterval(inittialLoad, 10000);
+    return () => clearInterval(interval);
+  }, [session.accessToken, title]);
 
   const handleLogout = async () => {
     await identity.logout();
     setAccessToken(null);
-    navigate("/login");
   };
 
   return (
@@ -325,27 +331,34 @@ const UserAssignPopover = ({
   assigned,
   onAssigned,
 }: UserAssignPopoverProps) => {
-  const [accessToken] = useAuthToken();
+  const { session } = useAuth();
   const [query, setQuery] = useState("");
 
   const [users, setUsers] = useState<identity.User[]>([]);
   const [nextUsers, setNextUsers] = useState<identity.User[]>([]);
 
   useEffect(() => {
-    identity
-      .users(accessToken!, 5)
-      .then((data) => {
-        setUsers(data.users);
+    if (!session?.accessToken) return;
 
+    identity
+      .users(session.accessToken, 5)
+      .then((data) => {
+        if (!session?.accessToken) return;
+
+        setUsers(data.users);
         identity
-          .users(accessToken!, 5, data.users[data.users.length - 1]?.accountId)
+          .users(
+            session.accessToken,
+            5,
+            data.users[data.users.length - 1]?.accountId
+          )
           .then((data) => {
             setNextUsers(data.users);
           })
           .catch((error) => console.error(error));
       })
       .catch((error) => console.error(error));
-  }, [accessToken]);
+  }, [session.accessToken]);
 
   const filtered = users.filter((u) =>
     u.fullName.toLowerCase().includes(query.toLowerCase())
@@ -363,11 +376,13 @@ const UserAssignPopover = ({
         <InfiniteScroll
           dataLength={filtered.length}
           next={() => {
+            if (!session.accessToken) return;
+
             setUsers((prev) => [...prev, ...nextUsers]);
 
             identity
               .users(
-                accessToken!,
+                session.accessToken,
                 5,
                 nextUsers[nextUsers.length - 1]?.accountId
               )
@@ -425,7 +440,7 @@ const TaskGroup = ({
   setTasks,
   setTaskGroups,
 }: TaskGroupProps) => {
-  const [accessToken] = useAuthToken();
+  const { session } = useAuth();
 
   const [, drop] = useDrop(
     () => ({
@@ -434,9 +449,9 @@ const TaskGroup = ({
         setTasks((tasks) => {
           const t = tasks.find((val) => val.taskId === item.id);
 
-          if (t) {
+          if (t && session.accessToken) {
             workspace
-              .updateTask(accessToken!, {
+              .updateTask(session.accessToken, {
                 workspaceId: t.workspaceId,
                 groupId: t.taskGroupId,
                 taskId: t.taskId,
@@ -485,8 +500,10 @@ const TaskGroup = ({
             <TitleEdit
               value={group.name}
               onFinish={async (val) => {
+                if (!session.accessToken) return;
+
                 await workspace.updateGroup(
-                  accessToken!,
+                  session.accessToken,
                   group.workspaceId,
                   group.groupId,
                   val.title
@@ -535,7 +552,8 @@ const TaskGroup = ({
         {group.state === "Creating" ? (
           <TaskForm
             onFinish={async (val) => {
-              const res = await workspace.createTask(accessToken!, {
+              if (!session.accessToken) return;
+              const res = await workspace.createTask(session.accessToken, {
                 workspaceId: group.workspaceId,
                 groupId: group.groupId,
                 title: val.title,
@@ -627,7 +645,7 @@ type TaskCardProps = {
 };
 
 const TaskCard = ({ task, setTask }: TaskCardProps) => {
-  const [accessToken] = useAuthToken();
+  const { session } = useAuth();
   const dateFormater = new Intl.DateTimeFormat("en-US", {
     dateStyle: "medium",
   });
@@ -661,7 +679,8 @@ const TaskCard = ({ task, setTask }: TaskCardProps) => {
               <TitleEdit
                 value={task.title}
                 onFinish={async (val) => {
-                  await workspace.updateTask(accessToken!, {
+                  if (!session.accessToken) return;
+                  await workspace.updateTask(session.accessToken, {
                     workspaceId: task.taskGroupId,
                     groupId: task.taskGroupId,
                     taskId: task.taskId,
@@ -744,7 +763,8 @@ const TaskCard = ({ task, setTask }: TaskCardProps) => {
               <UserAssignPopover
                 assigned={task.assignedTo}
                 onAssigned={async (val) => {
-                  await workspace.updateTask(accessToken!, {
+                  if (!session.accessToken) return;
+                  await workspace.updateTask(session.accessToken, {
                     workspaceId: task.taskGroupId,
                     groupId: task.taskGroupId,
                     taskId: task.taskId,

@@ -1,8 +1,8 @@
-from pydantic import BaseModel
+from src.common.model import Model
 
 
 
-class TokenPayload(BaseModel):
+class TokenPayload(Model):
     tenant_id: int
     id: int
     username: str

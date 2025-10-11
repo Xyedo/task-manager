@@ -1,9 +1,9 @@
 from typing import Optional, Union
-from pydantic import BaseModel
+from src.common.model import Model
 import datetime
 
 
-class CreateTask(BaseModel):
+class CreateTask(Model):
     workspaceId: int
     groupId: int
     title: str
@@ -12,7 +12,7 @@ class CreateTask(BaseModel):
     assignedToUserId: Optional[int]
 
 
-class UpdateTask(BaseModel):
+class UpdateTask(Model):
     workspaceId: int
     groupId: int
     taskId: int
@@ -22,8 +22,8 @@ class UpdateTask(BaseModel):
     dueDate: Union[datetime.datetime, None] = None
     assignedToUserId: Union[int, None] = None
 
-class DeleteTask(BaseModel):
+class DeleteTask(Model):
     taskId: int
 
-class GetTaskById(BaseModel):
+class GetTaskById(Model):
     taskId: int

@@ -1,0 +1,27 @@
+# """Requirements for testing setup."""
+
+# Core testing dependencies
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+pytest-benchmark>=4.0.0
+pytest-cov>=4.1.0
+pytest-mock>=3.11.0
+httpx>=0.24.0
+
+# Load testing
+locust>=2.15.0
+
+# Database testing
+sqlalchemy>=2.0.0
+alembic>=1.11.0
+
+# Authentication testing
+argon2-cffi>=23.0.0
+PyJWT>=2.8.0
+
+# Data validation
+pydantic>=2.0.0
+
+# Utilities
+faker>=19.0.0
+factory-boy>=3.3.0

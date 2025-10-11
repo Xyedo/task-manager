@@ -2,18 +2,18 @@
 
 import datetime
 from typing import Optional
-from pydantic import BaseModel
+from src.common.model import Model
 
-class UpdateGroupPayload(BaseModel):
+class UpdateGroupPayload(Model):
     name: str
   
-class UpdateGroupRequest(BaseModel):
+class UpdateGroupRequest(Model):
     workspaceId: int
     groupId: int
     name: str
 
 
-class UpdateGroupResponse(BaseModel):
+class UpdateGroupResponse(Model):
     groupId: int
     name: str
 

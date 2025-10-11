@@ -1,16 +1,16 @@
 import datetime
 from typing import Optional
-from pydantic import BaseModel
+from src.common.model import Model
 
 
 class GroupByWorkspaceRequest(
-    BaseModel,
+    Model,
 ):
     name: str
 
 
 
-class TaskResponse(BaseModel):
+class TaskResponse(Model):
     taskId: int
     title: str
     description: Optional[str]
@@ -24,7 +24,7 @@ class TaskResponse(BaseModel):
     updatedBy: Optional[int]
 
 
-class GroupResponse(BaseModel):
+class GroupResponse(Model):
     groupId: int
     name: str
     tasks: list[TaskResponse]
@@ -35,6 +35,6 @@ class GroupResponse(BaseModel):
     updatedBy: Optional[int]
 
 
-class GroupByWorkspaceResponse(BaseModel):
+class GroupByWorkspaceResponse(Model):
     workspaceId: int
     groups: list[GroupResponse]

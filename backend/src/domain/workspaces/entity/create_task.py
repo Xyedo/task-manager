@@ -1,16 +1,17 @@
 import datetime
 from typing import Optional
-from pydantic import BaseModel
+
+from src.common.model import Model
 
 
-class CreateTaskPayload(BaseModel):
+class CreateTaskPayload(Model):
     title: str
     description: Optional[str] = None
     dueDate: Optional[datetime.datetime] = None
     assignedToUserId: Optional[int] = None
 
 
-class CreateTaskResponse(BaseModel):
+class TaskResponse(Model):
     taskId: int
     title: str
     description: Optional[str]

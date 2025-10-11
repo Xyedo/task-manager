@@ -1,4 +1,4 @@
-import { useAuthToken } from "@/hooks/useAuthToken";
+import { useAuth } from "@/hooks/useAuthContext";
 import { PlusOutlined, RocketOutlined } from "@ant-design/icons";
 import { Layout, Menu, Modal, Input, Form } from "antd";
 import type { ItemType } from "antd/es/menu/interface";
@@ -8,20 +8,22 @@ import * as workspace from "@/api/workspace";
 
 export const Sidebar = () => {
   const navigate = useNavigate();
-  const [accessToken] = useAuthToken();
+  const { session } = useAuth();
   const location = useLocation();
   const [useProjects, setProjects] = useState<workspace.Workspace[]>([]);
 
-  const defaultSelectedKeys = decodeURIComponent(location.pathname.slice(1)) || "My Kanban Project";
-  
+  const defaultSelectedKeys =
+    decodeURIComponent(location.pathname.slice(1)) || "My Kanban Project";
+
   useEffect(() => {
+    if (!session?.accessToken) return;
     workspace
-      .listWorkspaces(accessToken!)
+      .listWorkspaces(session.accessToken)
       .then((res) => setProjects(res.workspaces))
       .catch((err) => {
         console.error("Failed to fetch workspaces:", err);
       });
-  }, [accessToken]);
+  }, [session.accessToken]);
 
   const [useProjectCreating, setProjectCreating] = useState(false);
   const projectChildren = useProjects.map<ItemType>((val) => ({
@@ -65,8 +67,9 @@ export const Sidebar = () => {
         onCancel={() => setProjectCreating(false)}
         onOk={() => setProjectCreating(false)}
         onFinish={(v) => {
+          if (!session?.accessToken) return;
           workspace
-            .createWorkspace(accessToken!, v.projectName)
+            .createWorkspace(session.accessToken, v.projectName)
             .then((res) => {
               setProjects((values) => [...values, res]);
               navigate(`/${res.name}`);

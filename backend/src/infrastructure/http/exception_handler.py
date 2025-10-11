@@ -31,6 +31,13 @@ def register_error_handlers(app):
             status_code=404,
             content={"detail": "Workspace not found"},
         )
+    
+    @app.exception_handler(workspace_exception.WorkspaceAlreadyExists)
+    def workspace_already_exists_exception_handler(request, exc):
+        return JSONResponse(
+            status_code=400,
+            content={"detail": "Workspace with this name already exists"},
+        )
 
     @app.exception_handler(workspace_exception.GroupNotFound)
     def group_not_found_exception_handler(request, exc):
