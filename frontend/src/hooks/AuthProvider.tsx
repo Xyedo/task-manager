@@ -6,6 +6,7 @@ import { AuthContext, type DecodedAccessToken } from "@/hooks/useAuthContext";
 export type AuthProviderProps = {
   children: React.ReactNode;
 };
+
 export function Auth({ children }: AuthProviderProps) {
   const navigate = useNavigate();
   const [accessToken, setAccessToken] = useState<string | null>(

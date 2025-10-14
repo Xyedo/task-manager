@@ -4,7 +4,6 @@ import Home from "@/pages/Home";
 import "@/app.css";
 
 function App() {
-  // simple auth mock using sessionStorage
 
   return (
     <Routes>

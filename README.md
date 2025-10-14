@@ -117,10 +117,9 @@ It has two Domain:
   
   Due to Nature of this Assignments, the Methodology i've used is Manual End to End testing from frontend and backends
 
-  
   After that I've Added unit test on Identity and Workspaces and load testing based on basic userflow
   You can run the unit test with ``pytest -m unit``
-  and load twsting with 
+  and load testing with 
   ```
   locust -f locustfile.py --host=http://localhost:8000 --users 5 --spawn-rate 1 --run-time 30s --headless
   
